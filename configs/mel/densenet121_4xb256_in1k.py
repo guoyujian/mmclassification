@@ -1,5 +1,5 @@
 _base_ = [
-    '../resnest/resnest101_32xb64_in1k.py'
+    '../densenet/densenet121_4xb256_in1k.py'
 ]
 
 train_cfg = dict(by_epoch=True, max_epochs=50, val_interval=1)
@@ -8,21 +8,16 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            'pretrained_models/resnet101_8xb32_in1k_20210831-539c63f8.pth',
+            'pretrained_models/densenet121_4xb256_in1k_20220426-07450f99.pth',
             prefix='backbone'
         )
     ),
     head=dict(
         num_classes=2,
-        loss=dict(
-            type='LabelSmoothLoss',
-            label_smooth_val=0.1,
-            num_classes=2,
-            reduction='mean',
-            loss_weight=1.0),
         topk=(1, ),
     ),
 )
+
 # dataset settings
 train_pipeline = [
     dict(type='LoadImageFromFile'),
@@ -70,21 +65,9 @@ val_dataloader = dict(
 )
 test_dataloader = val_dataloader
 
-
-val_cfg = dict()
-test_cfg = dict()
-
-
 val_evaluator = [
     dict(type='Accuracy', topk=(1, )),
     dict(type='SingleLabelMetric', num_classes = 2),
 ]
 
 test_evaluator = val_evaluator
-
-
-
-data_preprocessor = dict(
-    num_classes=2,
-)
-
