@@ -1,15 +1,15 @@
 _base_ = [
-    '../efficientnet/efficientnet-b0_8xb32_in1k.py'
+    '../resnext/resnext50-32x4d_8xb32_in1k.py'
 ]
-
-# optimizer = dict(type='Adam', lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
 
 
 model = dict(
     head=dict(
         num_classes=2,
-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),
-        topk=(1, )))
+        topk=(1, ),
+    )
+)
+
 
 dataset_type = 'CustomDataset'
 classes = ['nv', 'mel']  # 数据集中各类别的名称
@@ -79,7 +79,7 @@ data = dict(
 
 
 
-load_from = 'pretrained_models/efficientnet-b0_3rdparty_8xb32_in1k_20220119-a7e2a0b1.pth'
+load_from = 'pretrained_models/resnext50_32x4d_b32x8_imagenet_20210429-56066e27.pth'
 
 
 
@@ -96,5 +96,6 @@ log_config = dict(
         dict(type='TensorboardLoggerHook')  # 同样支持 Tensorboard 日志
     ]
 )
+
 
 

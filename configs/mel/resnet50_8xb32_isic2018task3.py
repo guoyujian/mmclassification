@@ -1,15 +1,12 @@
 _base_ = [
-    '../efficientnet/efficientnet-b0_8xb32_in1k.py'
+    '../resnet/resnet18_8xb32_in1k.py'
 ]
-
-# optimizer = dict(type='Adam', lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
-
 
 model = dict(
     head=dict(
         num_classes=2,
-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),
         topk=(1, )))
+
 
 dataset_type = 'CustomDataset'
 classes = ['nv', 'mel']  # 数据集中各类别的名称
@@ -78,15 +75,7 @@ data = dict(
 
 
 
-
-load_from = 'pretrained_models/efficientnet-b0_3rdparty_8xb32_in1k_20220119-a7e2a0b1.pth'
-
-
-
 runner = dict(type='EpochBasedRunner', max_epochs=80)
-
-evaluation = dict(interval=5, metric='accuracy',  metric_options={'topk': 1})
-
 checkpoint_config = dict(interval=5)
 
 log_config = dict(
@@ -96,5 +85,17 @@ log_config = dict(
         dict(type='TensorboardLoggerHook')  # 同样支持 Tensorboard 日志
     ]
 )
+
+
+load_from = 'pretrained_models/resnet50_8xb32_in1k_20210831-ea4938fc.pth'
+
+
+# evaluation = dict(interval=1, metric=['accuracy', 'recall'],  metric_options={'topk': 1})
+
+evaluation = dict(interval=5, metric='accuracy',  metric_options={'topk': 1})
+
+
+
+
 
 
