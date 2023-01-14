@@ -177,7 +177,13 @@ def worker_init_fn(worker_id, num_workers, rank, seed):
 
 
 def build_sampler(cfg, default_args=None):
+    # sampler_cfg = cfg.get('sampler')
+    # print(f'cfg: {cfg}')
     if cfg is None:
         return None
+    # elif cfg is not None and cfg['type'] == 'ImbalancedDatasetSampler':
+    #     from torchsampler import ImbalancedDatasetSampler
+    #     sampler = ImbalancedDatasetSampler
+    #     return sampler
     else:
         return build_from_cfg(cfg, SAMPLERS, default_args=default_args)
