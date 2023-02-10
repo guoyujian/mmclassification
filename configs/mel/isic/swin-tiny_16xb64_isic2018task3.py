@@ -17,6 +17,7 @@ model = dict(
 
 
 dataset_type = 'CustomDataset'
+classes = ['nv', 'mel']
 
 
 img_norm_cfg = dict(
@@ -64,19 +65,22 @@ data = dict(
         type=dataset_type,
         data_prefix='/home/fate/gyj/datasets/ISIC2018/ISIC2018_Task3_Training_Input',
         ann_file='/home/fate/gyj/datasets/ISIC2018/ISIC2018_Task3_Training_GroundTruth/train_meta.txt',
-        pipeline=train_pipeline
+        pipeline=train_pipeline,
+        classes = classes
     ),
     val=dict(
         type=dataset_type,
         data_prefix='/home/fate/gyj/datasets/ISIC2018/ISIC2018_Task3_Validation_Input',
         ann_file='/home/fate/gyj/datasets/ISIC2018/ISIC2018_Task3_Validation_GroundTruth/val_meta.txt',
-        pipeline=test_pipeline
+        pipeline=test_pipeline,
+        classes = classes
     ),
     test=dict(
         type=dataset_type,
         data_prefix='/home/fate/gyj/datasets/ISIC2018/ISIC2018_Task3_Validation_Input',
         ann_file='/home/fate/gyj/datasets/ISIC2018/ISIC2018_Task3_Validation_GroundTruth/val_meta.txt',
-        pipeline=test_pipeline
+        pipeline=test_pipeline,
+        classes = classes
     )
 )
 
@@ -84,7 +88,7 @@ data = dict(
 
 load_from = 'pretrained_models/swin_tiny_224_b16x64_300e_imagenet_20210616_090925-66df6be6.pth'
 
-runner = dict(type='EpochBasedRunner', max_epochs=80)
+runner = dict(type='EpochBasedRunner', max_epochs=200)
 
 evaluation = dict(interval=5, metric='accuracy',  metric_options={'topk': 1})
 
