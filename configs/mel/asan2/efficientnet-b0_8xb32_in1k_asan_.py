@@ -4,8 +4,17 @@ _base_ = [
 
 # optimizer = dict(type='Adam', lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
 
+# 使用init_cfg加载预训练模型
 
 model = dict(
+    backbone = dict(
+        # frozen_stage = 2,
+        init_cfg = dict(
+            type = 'Pretrained',
+            checkpoint = 'pretrained_models/efficientnet-b0_3rdparty_8xb32_in1k_20220119-a7e2a0b1.pth',
+            prefix = 'backbone'
+        )
+    ),
     head=dict(
         num_classes=2,
         loss=dict(type='CrossEntropyLoss', loss_weight=1.0),
@@ -92,7 +101,7 @@ data = dict(
 
 
 
-load_from = 'pretrained_models/efficientnet-b0_3rdparty_8xb32_in1k_20220119-a7e2a0b1.pth'
+# load_from = 'pretrained_models/efficientnet-b0_3rdparty_8xb32_in1k_20220119-a7e2a0b1.pth'
 
 
 
